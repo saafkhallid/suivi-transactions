@@ -8,19 +8,21 @@ const {
   updateStation,
   deleteStation,
 } = require("../controllers/station.controller");
+const authMiddleware = require("../middleware/auth.middleware");
+const isAdmin = require("../middleware/admin.middleware");
 
 // GET /api/stations
-router.get("/", getAllStations);
+router.get("/", authMiddleware, getAllStations);
 
 // GET /api/stations/inactive/10days
-router.get("/inactive/10days", getInactiveStations);
+router.get("/inactive/10days", authMiddleware, getInactiveStations);
 // CREATE
-router.post("/", createStation);
+router.post("/", isAdmin, authMiddleware, createStation);
 
 // UPDATE
-router.put("/:id", updateStation);
+router.put("/:id", isAdmin, authMiddleware, updateStation);
 
 // DELETE
-router.delete("/:id", deleteStation);
+router.delete("/:id", isAdmin, authMiddleware, deleteStation);
 
 module.exports = router;

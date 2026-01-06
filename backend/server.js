@@ -1,4 +1,3 @@
-
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
@@ -15,13 +14,17 @@ app.use(express.json());
 
 // ROUTES ✅ (تعريف قبل الاستعمال)
 const stationRoutes = require("./routes/station.routes");
+const authRoutes = require("./routes/auth.routes");
+
 // const transactionRoutes = require("./routes/transaction.routes");
 
 // Utilisation des routes
 app.use("/api/stations", stationRoutes);
+app.use("/api/auth", authRoutes);
+
 // app.use("/api/transactions", transactionRoutes);
 
-// const PORT = process.env.PORT || 5000;
-// app.listen(PORT, () => {
-//   console.log(`Server running on port ${PORT}`);
-// });
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
