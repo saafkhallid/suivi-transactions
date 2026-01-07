@@ -1,11 +1,13 @@
 const mongoose = require("mongoose");
-
 const stationSchema = new mongoose.Schema(
   {
     code: Number,
     name: String,
     ville: String,
-    ipDoms: String,
+    ipDoms: {
+      type: String,
+      required: true,
+    },
     type: {
       type: String,
       enum: ["OFFICIELLE", "ORGANIQUE", "COMMISSIONNAIRE"],
@@ -15,6 +17,7 @@ const stationSchema = new mongoose.Schema(
       enum: ["OK", "KO", "MANUEL"],
       default: "OK",
     },
+
     lastTransactionDate: Date,
   },
   { timestamps: true }

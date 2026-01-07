@@ -1,19 +1,21 @@
 const jwt = require("jsonwebtoken");
 
-module.exports = (req, res, next) => {
+// Middleware d'authentification
+const authenticate = (req, res, next) => {
   const authHeader = req.headers.authorization;
 
-  if (!authHeader) {
-    return res.status(401).json({ message: "Accès refusé" });
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({ message: "Token manquant ou invalide" });
   }
 
   const token = authHeader.split(" ")[1];
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET); // Assurez-vous d'avoir défini JWT_SECRET
+    req.user = decoded; // Ici, req.user contiendra id, role, etc.
     next();
-  } catch (error) {
-    res.status(401).json({ message: "Token invalide" });
+  } catch (err) {
+    return res.status(401).json({ message: "Token invalide" });
   }
 };
+module.exports = authenticate;

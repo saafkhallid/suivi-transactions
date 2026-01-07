@@ -59,3 +59,16 @@ exports.login = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.me = (req, res) => {
+  if (!req.user) {
+    return res.status(401).json({ message: "Non authentifié" });
+  }
+
+  res.json({
+    id: req.user.id,
+    role: req.user.role,
+  });
+};
+
+
