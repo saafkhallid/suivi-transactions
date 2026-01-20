@@ -5,6 +5,7 @@ const connectDB = require("./config/db");
 
 const app = express();
 
+
 // Connexion DB
 connectDB();
 
@@ -16,13 +17,12 @@ app.use(express.json());
 const stationRoutes = require("./routes/station.routes");
 const authRoutes = require("./routes/auth.routes");
 
-// const transactionRoutes = require("./routes/transaction.routes");
+const transactionRoutes = require("./routes/transaction.routes");
 
 // Utilisation des routes
 app.use("/api/stations", stationRoutes);
 app.use("/api/auth", authRoutes);
-
-// app.use("/api/transactions", transactionRoutes);
+app.use("/api/transactions", transactionRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

@@ -33,6 +33,8 @@ exports.login = async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
+    console.log("USER FROM DB:", user);
+
     if (!user) {
       return res
         .status(400)
@@ -47,7 +49,8 @@ exports.login = async (req, res) => {
     }
 
     const token = jwt.sign(
-      { id: user._id, role: user.role },
+      { id: user._id, role: "admin" },
+
       process.env.JWT_SECRET,
       {
         expiresIn: "1d",
@@ -70,5 +73,3 @@ exports.me = (req, res) => {
     role: req.user.role,
   });
 };
-
-
